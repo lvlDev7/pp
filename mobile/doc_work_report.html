@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Arbeitsnachweis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <a href="documents.html" style="color: var(--text-color); font-size: 1.2rem;"><i
+                class="fas fa-arrow-left"></i></a>
+        <h1>Arbeitsnachweis</h1>
+
+        <button onclick="showA4Preview('Arbeitsnachweis')" class="btn-preview"
+            style="margin-left: auto; padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;">
+            <i class="fas fa-file-pdf"></i> A4 Vorschau
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="form-header">
+                <h3>Tätigkeitsbericht</h3>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Vorlage laden</label>
+                <select class="template-select" onchange="applyTemplate(this)">
+                    <option value="">-- Vorlage wählen --</option>
+                    <option value="wartung_gas">Wartung Gastherme</option>
+                    <option value="bad_sani">Badsanierung Standard</option>
+                    <option value="heizung_stoerung">Störungsbehebung</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Kunde / Projekt</label>
+                <input type="text" id="report-title" class="form-input" placeholder="z.B. Müller Badrenovierung">
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Datum</label>
+                <input type="date" class="form-input" value="2025-12-29">
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Beschreibung der Tätigkeiten</label>
+                <textarea id="report-desc" class="form-input" rows="5"
+                    placeholder="Tätigkeiten hier eingeben..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Verwendetes Material</label>
+                <textarea id="report-materials" class="form-input" rows="4"
+                    placeholder="z.B. 2x Dichtung DN50..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Arbeitszeit (Std)</label>
+                <input type="number" class="form-input" placeholder="z.B. 4.5">
+            </div>
+        </div>
+
+        <!-- Signature: Customer -->
+        <div class="signature-section" id="sig-section-customer">
+            <label class="form-label">Unterschrift Auftraggeber</label>
+            <div class="signature-pad-container" id="pad-customer">
+                <canvas class="signature-canvas"></canvas>
+            </div>
+            <button class="clear-sig-btn" onclick="clearSignature('pad-customer')">Unterschrift löschen</button>
+        </div>
+
+        <!-- Signature: Craftsman -->
+        <div class="signature-section" id="sig-section-technician">
+            <label class="form-label">Unterschrift Handwerker</label>
+            <div class="signature-pad-container" id="pad-technician">
+                <canvas class="signature-canvas"></canvas>
+            </div>
+            <button class="clear-sig-btn" onclick="clearSignature('pad-technician')">Unterschrift löschen</button>
+        </div>
+
+        <button class="btn-sign" style="margin-top: 30px;" onclick="saveDocument()">Abschließen & Speichern</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

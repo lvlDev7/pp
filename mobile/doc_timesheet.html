@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stundenzettel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <a href="documents.html" style="color: var(--text-color); font-size: 1.2rem;"><i
+                class="fas fa-arrow-left"></i></a>
+        <h1>Stundenzettel</h1>
+        <div style="width: 25px;"></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="form-header">
+                <h3>Wochenübersicht KW 01</h3>
+            </div>
+
+            <div class="form-row">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <th style="text-align: left; padding: 10px 0;">Tag</th>
+                        <th style="padding: 10px 0;">Arbeit</th>
+                        <th style="padding: 10px 0;">Fahrt</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">Mo</td>
+                        <td><input type="text" class="form-input" style="padding: 5px;" value="8.0"></td>
+                        <td><input type="text" class="form-input" style="padding: 5px;" value="1.0"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">Di</td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">Mi</td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">Do</td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">Fr</td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                        <td><input type="text" class="form-input" style="padding: 5px;"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Gesamtstunden</label>
+                <div style="font-size: 1.2rem; font-weight: 700;">9.0 h</div>
+            </div>
+        </div>
+
+        <div class="signature-section">
+            <label class="form-label">Unterschrift Mitarbeiter</label>
+            <div class="signature-pad" id="sig-pad">
+                <p style="text-align: center; color: #ccc; padding-top: 80px; pointer-events: none;">Hier unterschreiben
+                </p>
+            </div>
+            <button class="btn-clear" onclick="clearSignature()">Löschen</button>
+            <button class="btn-sign" onclick="saveDocument()">Einreichen</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function clearSignature() { alert('Unterschrift gelöscht (Mock)'); }
+        function saveDocument() { alert('Stundenzettel eingereicht!'); window.location.href = 'documents.html'; }
+    </script>
+</body>
+
+</html>

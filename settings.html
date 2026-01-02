@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwerker Planer - Einstellungen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-hammer"></i> PlanerPro
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="planning.html"><i class="fas fa-calendar-alt"></i> Einsatzplanung</a></li>
+            <li><a href="employees.html"><i class="fas fa-users"></i> Mitarbeiter</a></li>
+            <li><a href="documents.html"><i class="fas fa-folder-open"></i> Dokumente</a></li>
+            <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> Einstellungen</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Einstellungen</h1>
+            <p>Konfigurieren Sie Ihr System.</p>
+        </header>
+
+        <div class="card" style="max-width: 600px;">
+            <h3 style="color: var(--text-color); margin-bottom: 20px;">Allgemein</h3>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Firmenname</label>
+                <input type="text" value="Meisterbetrieb GmbH"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Email Benachrichtigungen</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="checkbox" id="email-notif" checked style="width: 18px; height: 18px;">
+                    <label for="email-notif">Tägliche Zusammenfassung senden</label>
+                </div>
+            </div>
+
+            <h3 style="color: var(--text-color); margin-bottom: 20px; margin-top: 30px;">Darstellung</h3>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Theme</label>
+                <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    <option>Helles Design (Aktiv)</option>
+                    <option>Dunkles Design</option>
+                </select>
+            </div>
+
+            <button
+                style="background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 500; cursor: pointer;">Speichern</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            if (window.checkAuth) window.checkAuth();
+        });
+    </script>
+</body>
+
+</html>

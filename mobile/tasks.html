@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Offene Tätigkeiten</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <h1>Offene Aufgaben</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="task-item">
+                <div class="task-checkbox"><i class="fas fa-check" style="color: transparent;"></i></div>
+                <div>
+                    <div style="font-weight: 500;">Material aufladen</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Lager H3 • Dringend</div>
+                </div>
+            </div>
+            <div class="task-item">
+                <div class="task-checkbox"
+                    style="background-color: var(--primary-color); border-color: var(--primary-color); color: white;"><i
+                        class="fas fa-check"></i></div>
+                <div>
+                    <div style="font-weight: 500; text-decoration: line-through; color: #aaa;">Fahrzeug Check</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Erledigt</div>
+                </div>
+            </div>
+            <div class="task-item">
+                <div class="task-checkbox"><i class="fas fa-check" style="color: transparent;"></i></div>
+                <div>
+                    <div style="font-weight: 500;">Bericht unterschreiben</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Auftrag #4920</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="schedule.html" class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Planung</span>
+        </a>
+        <a href="documents.html" class="nav-item">
+            <i class="fas fa-folder"></i>
+            <span>Doks</span>
+        </a>
+        <a href="tasks.html" class="nav-item active">
+            <i class="fas fa-check-square"></i>
+            <span>Aufgaben</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Einstellungen</span>
+        </a>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+    <script src="../mock_data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.checkAuth();
+        });
+    </script>
+</body>
+
+</html>

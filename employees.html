@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwerker Planer - Mitarbeiter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-hammer"></i> PlanerPro
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="planning.html"><i class="fas fa-calendar-alt"></i> Einsatzplanung</a></li>
+            <li><a href="employees.html" class="active"><i class="fas fa-users"></i> Mitarbeiter</a></li>
+            <li><a href="documents.html"><i class="fas fa-folder-open"></i> Dokumente</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Einstellungen</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Mitarbeiter</h1>
+            <p>Übersicht über alle Angestellten und Crews.</p>
+        </header>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+            <!-- Dynamic content will be loaded here -->
+            <!-- Dynamic content will be loaded here -->
+            <style>
+                .spinner-container {
+                    grid-column: 1 / -1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px;
+                }
+
+                .spinner {
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid var(--primary-color);
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    animation: spin 1s linear infinite;
+                }
+
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+            </style>
+            <div id="loading-indicator" class="spinner-container">
+                <div class="spinner"></div>
+                <p style="color: #aaa; margin-top: 15px; font-weight: 500;">Lade Mitarbeiter...</p>
+            </div>
+            <!-- Add New -->
+            <div class="card card-add-new" onclick="openEmployeeModal()"
+                style="text-align: center; align-items: center; justify-content: center; border: 2px dashed #e0e0e0; background-color: transparent; cursor: pointer;">
+                <i class="fas fa-plus" style="font-size: 2rem; color: #ccc;"></i>
+                <p style="margin-top: 10px; color: var(--text-muted);">Mitarbeiter hinzufügen</p>
+            </div>
+        </div>
+    </div>
+    <!-- Add Employee Modal -->
+    <div id="add-employee-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Neuen Mitarbeiter anlegen</h2>
+                <button onclick="closeEmployeeModal()"
+                    style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <form id="add-employee-form">
+                <div style="margin-bottom: 20px; text-align: center;">
+                    <img id="avatar-preview" src="https://via.placeholder.com/100"
+                        style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #eee;">
+                    <br>
+                    <input type="file" id="avatar-upload" accept="image/*" style="margin-top: 10px;"
+                        onchange="previewAvatar(event)">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Vorname</label>
+                        <input type="text" id="emp-firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname</label>
+                        <input type="text" id="emp-lastname" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Beruf</label>
+                    <input type="text" id="emp-jobtitle" placeholder="z.B. Elektriker" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Rang</label>
+                    <select id="emp-rank"
+                        style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ddd;" required>
+                        <option value="Helfer">Helfer</option>
+                        <option value="Auszubildender">Auszubildender</option>
+                        <option value="Geselle">Geselle</option>
+                        <option value="Meister">Meister</option>
+                        <option value="Andere">Andere</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Email (Login)</label>
+                    <input type="email" id="emp-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Passwort (Initial)</label>
+                    <input type="text" id="emp-password" value="1234567" required>
+                </div>
+
+                <button type="submit" class="btn-primary"
+                    style="width: 100%; margin-top: 20px; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 6px;">Mitarbeiter
+                    Speichern</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="employees.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            if (window.checkAuth) window.checkAuth();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Abnahmeprotokoll WP</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <a href="documents.html" style="color: var(--text-color); font-size: 1.2rem;"><i
+                class="fas fa-arrow-left"></i></a>
+        <h1>Abnahmeprotokoll</h1>
+        <div style="width: 25px;"></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="form-header">
+                <h3>Übergabe Wärmepumpe</h3>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Fabrikat / Modell</label>
+                <input type="text" class="form-input" placeholder="Hersteller X, Modell Y">
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Seriennummer</label>
+                <input type="text" class="form-input">
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Prüfpunkte</label>
+                <div style="border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox" checked> Elektrischer Anschluss geprüft
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox" checked> Hydraulik entlüftet
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox"> Einweisung Betreiber erfolgt
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Bemerkungen</label>
+                <textarea class="form-input" rows="2"></textarea>
+            </div>
+        </div>
+
+        <div class="signature-section">
+            <label class="form-label">Unterschrift Anlagenbetreiber</label>
+            <div class="signature-pad-container" id="pad-operator">
+                <canvas class="signature-canvas"></canvas>
+            </div>
+            <button class="clear-sig-btn" onclick="clearSignature('pad-operator')">Unterschrift löschen</button>
+            <button class="btn-sign" onclick="saveDocument()">Abnahme bestätigen</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

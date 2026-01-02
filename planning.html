@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwerker Planer - Einsatzplanung</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-hammer"></i> PlanerPro
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="planning.html" class="active"><i class="fas fa-calendar-alt"></i> Einsatzplanung</a></li>
+            <li><a href="employees.html"><i class="fas fa-users"></i> Mitarbeiter</a></li>
+            <li><a href="documents.html"><i class="fas fa-folder-open"></i> Dokumente</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Einstellungen</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Einsatzplanung</h1>
+            <p>Verwalte Termine und weise Teams zu.</p>
+        </header>
+
+        <div class="layout-container" style="display: flex; flex-direction: column; gap: 20px;">
+
+            <!-- 1. Unscheduled Orders Pool (Top, Horizontal) -->
+            <div class="card" style="width: 100%; background-color: #fafafa;">
+                <h3 style="margin-bottom: 15px; color: var(--text-muted);">Offene Aufträge</h3>
+                <input type="text" id="pool-search" placeholder="Suchen (Kunde, Titel)..."
+                    style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                <div id="unscheduled-pool" class="pool-container" ondragover="allowDrop(event)"
+                    ondrop="drop(event, 'pool')"
+                    style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; min-height: 120px; align-items: center;">
+                    <!-- Draggable items will appear here -->
+                    <div style="text-align: center; color: #aaa; padding: 20px; width: 100%;">Keine offenen Aufträge
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Main Calendar Area -->
+            <div class="card" style="width: 100%; min-height: 600px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div id="current-date-display" style="font-weight: 600; font-size: 1.2rem;">Lade Datum...</div>
+                        <div class="calendar-controls"
+                            style="display: flex; gap: 8px; align-items: center; background: #f8f9fa; padding: 4px; border-radius: 8px;">
+                            <button id="btn-prev"
+                                style="width: 32px; height: 32px; border: none; background: white; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;">
+                                <i class="fas fa-chevron-left" style="color: #555;"></i>
+                            </button>
+                            <button id="btn-today"
+                                style="border: none; background: white; border-radius: 6px; padding: 0 12px; height: 32px; font-weight: 600; font-size: 0.9rem; color: #333; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;">
+                                Heute
+                            </button>
+                            <button id="btn-next"
+                                style="width: 32px; height: 32px; border: none; background: white; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;">
+                                <i class="fas fa-chevron-right" style="color: #555;"></i>
+                            </button>
+
+                            <style>
+                                #btn-prev:hover,
+                                #btn-next:hover,
+                                #btn-today:hover {
+                                    background: #e9ecef !important;
+                                    transform: translateY(-1px);
+                                }
+
+                                #btn-prev:active,
+                                #btn-next:active,
+                                #btn-today:active {
+                                    transform: translateY(0);
+                                    box-shadow: none;
+                                }
+                            </style>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div class="view-switcher" id="view-mode-container">
+                            <button class="view-btn" data-view="week">Woche</button>
+                            <button class="view-btn active" data-view="day">Tag</button>
+                            <button class="view-btn" data-view="month">Monat</button>
+                            <button class="view-btn" data-view="year">Jahr</button>
+                        </div>
+                        <select id="employee-filter" style="padding: 8px; border-radius: 6px; border: 1px solid #ddd;">
+                            <option value="all">Alle Mitarbeiter</option>
+                        </select>
+                        <button onclick="openModal()"
+                            style="padding: 8px 16px; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            <i class="fas fa-plus"></i> Neuer Auftrag
+                        </button>
+                    </div>
+                </div>
+
+                <div class="calendar-container">
+                    <table id="calendar-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr id="calendar-header-row" style="text-align: left; border-bottom: 2px solid #f0f0f0;">
+                                <!-- Dynamically filled -->
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-body">
+                            <!-- Rows generated by JS -->
+                        </tbody>
+                    </table>
+                    <div id="calendar-grid-view" style="display: none;">
+                        <!-- Grid generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Details Modal -->
+    <div id="job-details-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2 id="detail-modal-title">Auftrag Details</h2>
+                <button onclick="closeDetailModal()"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Kunde:</strong> <span id="detail-customer"></span></p>
+                <p><strong>Typ:</strong> <span id="detail-type"></span></p>
+                <p><strong>Zeit:</strong> <span id="detail-time"></span></p>
+                <p><strong>Status:</strong> <span id="detail-status"></span></p>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button id="btn-unassign" class="btn-secondary"
+                        style="flex: 1; border: 1px solid #ddd; color: #555; padding: 10px; border-radius: 6px; cursor: pointer;">
+                        <i class="fas fa-undo"></i> In Pool
+                    </button>
+                    <button id="btn-delete-job" class="btn-secondary"
+                        style="flex: 1; border: 1px solid #ef4444; color: #ef4444; background: #fff0f0; padding: 10px; border-radius: 6px; cursor: pointer;">
+                        <i class="fas fa-trash"></i> Löschen
+                    </button>
+                </div>
+                <!-- Future: Edit Button -->
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"
+        style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;">
+    </div>
+
+    <!-- Modal for New Order -->
+    <div id="order-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Neuen Auftrag anlegen</h2>
+                <button onclick="closeModal()"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-order-form" onsubmit="createNewOrder(event)">
+                    <div class="form-group">
+                        <label>Kunde Name</label>
+                        <input type="text" id="customer-name" required placeholder="z.B. Familie Müller">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse / Lage</label>
+                        <input type="text" id="customer-address" required placeholder="Musterstraße 1, Berlin">
+                    </div>
+                    <div class="form-group">
+                        <label>Auftragstitel</label>
+                        <input type="text" id="order-title" required placeholder="z.B. Heizungswartung">
+                    </div>
+                    <div class="form-group">
+                        <label>Beschreibung</label>
+                        <textarea id="order-desc" rows="3" placeholder="Details zum Auftrag..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Typ</label>
+                        <select id="order-type">
+                            <option value="Wartung">Wartung</option>
+                            <option value="Reparatur">Reparatur</option>
+                            <option value="Installation">Installation</option>
+                        </select>
+                    </div>
+                    <!-- File Upload Mock -->
+                    <div class="form-group">
+                        <label>Bilder / Videos hinzufügen</label>
+                        <div
+                            style="border: 2px dashed #ddd; padding: 20px; text-align: center; border-radius: 6px; cursor: pointer;">
+                            <i class="fas fa-cloud-upload-alt"></i> Hier Dateien ablegen
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Anlegen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="mock_data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            if (window.checkAuth) window.checkAuth();
+        });
+    </script>
+</body>
+
+</html>

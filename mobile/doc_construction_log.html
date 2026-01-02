@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Baudokumentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <a href="documents.html" style="color: var(--text-color); font-size: 1.2rem;"><i
+                class="fas fa-arrow-left"></i></a>
+        <h1>Baudokumentation</h1>
+        <div style="width: 25px;"></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="form-header">
+                <h3>Zustandsbericht</h3>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Bauabschnitt</label>
+                <select class="form-input">
+                    <option>Rohbau</option>
+                    <option>Installation</option>
+                    <option>Endmontage</option>
+                    <option>Abnahme</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Notizen zum Baufortschritt</label>
+                <textarea class="form-input" rows="4"></textarea>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Fotos hinzufügen</label>
+                <div
+                    style="border: 2px dashed #ddd; padding: 30px; border-radius: 8px; text-align: center; color: var(--text-muted);">
+                    <i class="fas fa-camera" style="font-size: 1.5rem; margin-bottom: 10px;"></i><br>
+                    Kamera öffnen
+                </div>
+            </div>
+        </div>
+
+        <div class="signature-section">
+            <label class="form-label">Unterschrift (Optional)</label>
+            <div class="signature-pad-container" id="pad-site-manager">
+                <canvas class="signature-canvas"></canvas>
+            </div>
+            <button class="clear-sig-btn" onclick="clearSignature('pad-site-manager')">Unterschrift löschen</button>
+            <button class="btn-sign" onclick="saveDocument()">Dokumentieren</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwerker Planer - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-hammer"></i> PlanerPro
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="planning.html"><i class="fas fa-calendar-alt"></i> Einsatzplanung</a></li>
+            <li><a href="employees.html"><i class="fas fa-users"></i> Mitarbeiter</a></li>
+            <li><a href="documents.html"><i class="fas fa-folder-open"></i> Dokumente</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Einstellungen</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Willkommen zurück, Planer!</h1>
+            <p>Hier ist der Überblick für heute.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-hard-hat"></i></div>
+                <div>
+                    <h3>Aktive Arbeiter</h3>
+                    <div class="number" id="active-workers-count">--</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="background-color: rgba(80, 227, 194, 0.1); color: var(--accent-color);"><i
+                        class="fas fa-check-circle"></i></div>
+                <div>
+                    <h3>Aufträge Heute</h3>
+                    <div class="number" id="orders-today-count">--</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon" style="background-color: rgba(255, 159, 67, 0.1); color: #ff9f43;"><i
+                        class="fas fa-clipboard-list"></i></div>
+                <div>
+                    <h3>Offene Anfragen</h3>
+                    <div class="number" id="open-requests-count">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-placeholder">
+            <h2><i class="fas fa-chart-line"></i> Wochenübersicht</h2>
+            <p style="margin-top: 10px;">Diagramme und detaillierte Statistiken würden hier erscheinen.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="mock_data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            if (window.checkAuth) window.checkAuth();
+        });
+    </script>
+</body>
+
+</html>

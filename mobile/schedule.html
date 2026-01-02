@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meine Planung</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <h1>Einsatzplanung</h1>
+    </header>
+
+    <!-- View Switcher -->
+    <div class="view-switcher" style="padding: 10px 15px; display: flex; gap: 5px; overflow-x: auto;">
+        <button class="view-btn active" data-view="day">Tag</button>
+        <button class="view-btn" data-view="week">Woche</button>
+        <button class="view-btn" data-view="month">Monat</button>
+        <button class="view-btn" data-view="year">Jahr</button>
+    </div>
+
+    <div class="container">
+        <div class="section-title"
+            style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: var(--shadow);">
+            <button id="prev-day"
+                style="background: none; border: none; font-size: 1.2rem; color: var(--primary-color); padding: 10px;"><i
+                    class="fas fa-chevron-left"></i></button>
+            <div id="current-date-display" style="font-weight: 600;">Heute, 29.12.2025</div>
+            <button id="next-day"
+                style="background: none; border: none; font-size: 1.2rem; color: var(--primary-color); padding: 10px;"><i
+                    class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div id="schedule-list">
+            <!-- Placeholder if JS fails -->
+            <div class="card">
+                <div class="card-title">Müller Badrenovierung</div>
+                <div class="card-subtitle">08:00 - 16:00 Uhr</div>
+                <div class="status-badge status-planned">Geplant</div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="schedule.html" class="nav-item active">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Planung</span>
+        </a>
+        <a href="documents.html" class="nav-item">
+            <i class="fas fa-folder"></i>
+            <span>Doks</span>
+        </a>
+        <a href="tasks.html" class="nav-item">
+            <i class="fas fa-check-square"></i>
+            <span>Aufgaben</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Einstellungen</span>
+        </a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+    <script src="../mock_data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.checkAuth();
+        });
+    </script>
+</body>
+
+</html>

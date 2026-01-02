@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wartungsprotokoll</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <a href="documents.html" style="color: var(--text-color); font-size: 1.2rem;"><i
+                class="fas fa-arrow-left"></i></a>
+        <h1>Wartungsprotokoll</h1>
+        <div style="width: 25px;"></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="form-header">
+                <h3>Anlagenprüfung</h3>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Anlagentyp</label>
+                <div style="display: flex; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px;"><input type="radio" name="type"
+                            checked> Gas</label>
+                    <label style="display: flex; align-items: center; gap: 5px;"><input type="radio" name="type">
+                        Öl</label>
+                    <label style="display: flex; align-items: center; gap: 5px;"><input type="radio" name="type">
+                        WP</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Checkliste</label>
+                <div style="border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox" checked> Druckprüfung durchgeführt
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox"> Filter gereinigt
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox"> Sicherheitsventil getestet
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 5px 0;">
+                        <input type="checkbox"> Messwerte protokolliert
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Gemessene Werte (Abgas/Druck)</label>
+                <textarea class="form-input" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="signature-section">
+            <label class="form-label">Unterschrift Techniker</label>
+            <div class="signature-pad-container" id="pad-technician">
+                <canvas class="signature-canvas"></canvas>
+            </div>
+            <button class="clear-sig-btn" onclick="clearSignature('pad-technician')">Unterschrift löschen</button>
+            <button class="btn-sign" onclick="saveDocument()">Protokoll speichern</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function clearSignature() { alert('Unterschrift gelöscht (Mock)'); }
+        function saveDocument() { alert('Protokoll gespeichert!'); window.location.href = 'documents.html'; }
+    </script>
+</body>
+
+</html>
